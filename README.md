@@ -16,11 +16,23 @@ npm start
 
 This will concurrently start both the frontend and mock backend services.
 
+*Possible inconvenience*
+
+processes on ports 3000 and 3001 could persist in case of partial start script failures, please
+end them manually if this happen
+
 If there are problems with the shorthand start script, please check the following paragraph:
 
 ### Manual Start
 
-If the root-level start script fails, you can start the services individually:
+If the root-level start script fails, you can start the services individually.
+
+First, try running 
+
+```bash
+npm run install-deps
+```
+Then:
 
 1. Start the mock backend:
 ```bash
@@ -48,6 +60,8 @@ The frontend will be available at `http://localhost:3000` and the mock backend a
 
 4. Due to the massive scope, both frontend and backend are AI-generated under guidance.
 
+5. I18n for backend errors is not implemented due to time constraints
+
 ## Project Structure
 
 ```
@@ -57,11 +71,3 @@ currency-test/
 │   └── mock-backend/ # Express.js mock backend with SQLite
 └── package.json      # Root package.json for workspace management
 ```
-
-## Development Notes
-
-- The project uses a monorepo structure with npm workspaces
-- Frontend is built with Next.js 14, RTK Query, and Tailwind CSS
-- Backend uses TypeORM with SQLite for data storage
-- All necessary configuration files are committed to the repository
-- Lock files are committed to ensure dependency version consistency
