@@ -1,1 +1,47 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
 node_modules
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Important: Do NOT ignore these files as they ensure consistent dependencies
+!package-lock.json
+!yarn.lock
+
+# testing
+coverage
+
+# next.js
+packages/frontend/.next/
+packages/frontend/out/
+packages/frontend/.swc/
+
+# production
+packages/frontend/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
