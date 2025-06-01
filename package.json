@@ -10,11 +10,10 @@
   ],
   "scripts": {
     "prestart": "node -e \"if (process.version.slice(1).split('.')[0] < 16) { console.error('Node.js version 16 or higher is required'); process.exit(1); }\"",
-    "build": "npm run build --workspaces",
-    "dev": "npm run dev --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present",
     "install-deps": "npm install && cd packages/frontend && npm install && cd ../mock-backend && npm install && cd ../..",
-    "start": "npm run install-deps && concurrently --kill-others --handle-input \"cd packages/mock-backend && npm run dev\" \"cd packages/frontend && npm run dev\""
+    "start-backend": "cd packages/mock-backend && npm run dev",
+    "start-frontend": "cd packages/frontend && npm run dev",
+    "start": "npm run install-deps && npm run start-backend & sleep 5 && npm run start-frontend"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
