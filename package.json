@@ -13,7 +13,8 @@
     "build": "npm run build --workspaces",
     "dev": "npm run dev --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
-    "start": "npm install && cd packages/frontend && npm install && cd ../mock-backend && npm install && cd ../.. && concurrently --kill-others-on-fail --handle-input \"cd packages/mock-backend && npm run dev\" \"cd packages/frontend && npm run dev\""
+    "install-deps": "npm install && cd packages/frontend && npm install && cd ../mock-backend && npm install && cd ../..",
+    "start": "npm run install-deps && concurrently --kill-others --handle-input \"cd packages/mock-backend && npm run dev\" \"cd packages/frontend && npm run dev\""
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
