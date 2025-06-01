@@ -28,25 +28,34 @@ export function DeleteAccountDialog({ open, onOpenChange, account, lang }: Delet
   const [confirmText, setConfirmText] = useState('');
   const [mounted, setMounted] = useState(false);
   const [dict, setDict] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
     getDictionary(lang).then(setDict);
   }, [lang]);
 
+  // Reset error and confirm text when dialog opens/closes
+  useEffect(() => {
+    if (!open) {
+      setError(null);
+      setConfirmText('');
+    }
+  }, [open]);
+
   const handleDelete = async () => {
     if (confirmText !== 'DELETE') {
-      toast.error('Please type DELETE to confirm');
+      toast.error(dict.pleaseTypeDelete);
       return;
     }
 
     try {
       await deleteAccount(account.id).unwrap();
-      toast.success('Account deleted successfully');
+      toast.success(dict.accountDeleted);
       onOpenChange(false);
     } catch (error: any) {
-      const errorMessage = error?.data?.message || 'Failed to delete account. Please try again.';
-      toast.error(errorMessage);
+      const errorMessage = error?.data?.error || dict.deleteError;
+      setError(errorMessage);
       console.error('Failed to delete account:', error);
     }
   };
@@ -61,18 +70,25 @@ export function DeleteAccountDialog({ open, onOpenChange, account, lang }: Delet
         <DialogHeader>
           <DialogTitle>{dict.delete}</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this account? This action cannot be undone.
+            {dict.confirmDelete}
           </DialogDescription>
         </DialogHeader>
         <div className="py-4">
           <p className="text-sm text-muted-foreground mb-4">
-            Type DELETE to confirm:
+            {dict.typeDeleteToConfirm}
           </p>
           <Input
             value={confirmText}
-            onChange={(e) => setConfirmText(e.target.value)}
-            placeholder="DELETE"
+            onChange={(e) => {
+              setConfirmText(e.target.value);
+              setError(null); // Clear error when user types
+            }}
+            placeholder={dict.deleteConfirmPlaceholder}
+            className={error ? 'border-red-500' : ''}
           />
+          {error && (
+            <p className="mt-2 text-sm text-red-500">{error}</p>
+          )}
         </div>
         <DialogFooter>
           <Button variant="destructive" onClick={handleDelete}>
