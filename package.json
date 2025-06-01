@@ -13,9 +13,10 @@
     "install-deps": "npm install && cd packages/frontend && npm install && cd ../mock-backend && npm install && cd ../..",
     "start-backend": "cd packages/mock-backend && npm run dev",
     "start-frontend": "cd packages/frontend && npm run dev",
-    "start": "npm run install-deps && npm run start-backend & sleep 5 && npm run start-frontend"
+    "start": "npm run install-deps && concurrently --kill-others --success first \"npm run start-backend\" \"wait-on tcp:3001 && npm run start-frontend\""
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "wait-on": "^7.2.0"
   }
 } 
