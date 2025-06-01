@@ -1,5 +1,11 @@
 # Currency Transfer App
 
+## Requirements
+
+The app expects Nodejs version of 22 and higher. The assumption is, that compatibility with any
+particular number of early Nodejs versions is not a requirement. To some extent, compatibility
+will work with earlier versions, but not many were tested.
+
 ## Quick Start
 
 From the root directory:
@@ -10,7 +16,9 @@ npm start
 
 This will concurrently start both the frontend and mock backend services.
 
-## Manual Start
+If there are problems with the shorthand start script, please check the following paragraph:
+
+### Manual Start
 
 If the root-level start script fails, you can start the services individually:
 

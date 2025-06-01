@@ -2,14 +2,18 @@
   "name": "currency-test",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
+    "prestart": "node -e \"if (process.version.slice(1).split('.')[0] < 16) { console.error('Node.js version 16 or higher is required'); process.exit(1); }\"",
     "build": "npm run build --workspaces",
     "dev": "npm run dev --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
-    "start": "npm install && npm install --workspace=packages/frontend && npm install --workspace=packages/mock-backend && concurrently --kill-others-on-fail --handle-input \"npm run dev --workspace=packages/mock-backend\" \"npm run dev --workspace=packages/frontend\""
+    "start": "npm install && cd packages/frontend && npm install && cd ../mock-backend && npm install && cd ../.. && concurrently --kill-others-on-fail --handle-input \"cd packages/mock-backend && npm run dev\" \"cd packages/frontend && npm run dev\""
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
